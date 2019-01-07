@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Simple validation tool used to compare two versions of a VCF file.  Designed and beneficial to test the consistancy of called variants across different callers and pipelines at different time points.
+Simple validation tool used to compare two versions of a VCF file.  Designed and beneficial to test the consistency of called variants across different callers and pipelines at different time points.
 
 It uses a simple hashing scheme which will compares SNP and INDEL calls without need for normalization first.  Header information will not be considered.
 
