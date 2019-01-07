@@ -1,4 +1,4 @@
-![test](/Users/srynobio1/Desktop/jibelogo.png)
+![test](https://github.com/srynobio/jibe/blob/dev/image/jibelogo.png)
 
 ### Introduction
 
