@@ -13,7 +13,7 @@ By default only the following will be compared:
 ### Usage:
 
 ```
-Usage: jibe [--vcf VCF] [--snp] [--nomulti] [--dataline] [--cpus CPUS]
+Usage: jibe [--vcf VCF] [--snp] [--nomulti] [--dataline] [--cpus CPUS] [--version]
 
 Options:
   --vcf VCF              VCF file to collect concordance from. Space separated.
@@ -21,5 +21,6 @@ Options:
   --nomulti              Confirm via exit, no multi-allelic variants.
   --dataline             Will use complete variant dataline including INFO and (single|multi) Genotype fields
   --cpus CPUS            Number of CPUS workers to allow. [default: NumCPU]
+  --version              Print current version and exit.
   --help, -h             display this help and exit
 ```

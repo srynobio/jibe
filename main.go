@@ -14,6 +14,9 @@ import (
 	"github.com/brentp/xopen"
 )
 
+// Current jibe version
+const Version = "1.0.0"
+
 func digest(bv []byte) string {
 	hasher := sha1.New()
 	hasher.Write(bv)
@@ -37,9 +40,16 @@ func main() {
 		NOMULTI  bool     `help:"Confirm via exit, no multi-allelic variants."`
 		DATALINE bool     `help:"Will use complete variant dataline including INFO and (single|multi) Genotype fields"`
 		CPUS     int      `help:"Number of CPUS workers to allow."`
+		VERSION  bool     `help:"Print current version and exit."`
 	}
 	args.CPUS = runtime.NumCPU()
 	arg.MustParse(&args)
+
+	// Version print
+	if args.VERSION == true {
+		fmt.Println(Version)
+		os.Exit(0)
+	}
 
 	// Check for two files.
 	if len(args.VCF) != 2 {
