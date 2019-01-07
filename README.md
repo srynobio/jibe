@@ -1,4 +1,4 @@
-![test](https://github.com/srynobio/jibe/blob/dev/image/jibelogo.png)
+![jibe](https://github.com/srynobio/jibe/blob/dev/image/jibelogo.png)
 
 ### Introduction
 
