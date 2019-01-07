@@ -2,13 +2,13 @@
 
 ### Introduction
 
-Simple validation tool used to compare two versions of a VCF file.  Designed and beneficial to test the consistency of called variants across different callers and pipelines at different time points.
+* Simple validation tool used to compare two versions of a VCF file.  Designed and beneficial to test the consistency of called variants across different callers and pipelines at different time points.
 
-It uses a simple hashing scheme which will compares SNP and INDEL calls without need for normalization first.  Header information will not be considered.
+* It uses a simple hashing scheme which will compares SNP and INDEL calls without need for normalization first.  Header information will not be considered.
 
-Runtime for WES data is quite quick, but will increase with WGS based on file size and number of individuals within.
+* Runtime for WES data is quite quick, but will increase with WGS based on file size and number of individuals within.
 
-By default only the following will be compared:
+* By default only the following will be compared:
 
 `chromosome:start:end:reference:alt`
 
