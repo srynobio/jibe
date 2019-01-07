@@ -26,3 +26,7 @@ Options:
   --version              Print current version and exit.
   --help, -h             display this help and exit
 ```
+
+### Instalation:
+
+Prebuilt binaries for mac OS and Linux are available [here](https://github.com/srynobio/jibe/releases)
