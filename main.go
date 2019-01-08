@@ -15,7 +15,7 @@ import (
 )
 
 // Current jibe version
-const Version = "1.0.0"
+const Version = "1.0.1"
 
 func digest(bv []byte) string {
 	hasher := sha1.New()
@@ -126,6 +126,9 @@ func main() {
 		wg.Wait()
 		defer close(dchan)
 	}()
+
+	// Status message.
+	log.Println("Processing union of files.")
 
 	// Get value from channel and make lookup.
 	var union int
