@@ -2,7 +2,7 @@ FROM ubuntu:latest
 MAINTAINER Shawn Rynearson "shawn.rynearson@gmail.com"
 
 LABEL vender="srynobio"
-ENV VERSION 1.0.1 
+ENV VERSION 1.0.1
 
 RUN apt-get update && apt-get -y install \
 	git \
