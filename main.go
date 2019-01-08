@@ -15,7 +15,7 @@ import (
 )
 
 // Current jibe version
-const Version = "1.0.1"
+const Version = "1.0.2"
 
 func digest(bv []byte) string {
 	hasher := sha1.New()
@@ -127,11 +127,8 @@ func main() {
 		defer close(dchan)
 	}()
 
-	// Status message.
-	log.Println("Processing union of files.")
-
 	// Get value from channel and make lookup.
-	var union int
+	var union float64
 	dataLookup := make(map[string]int)
 	for receive := range dchan {
 		if _, ok := dataLookup[receive]; ok {
@@ -142,21 +139,28 @@ func main() {
 			dataLookup[receive]++
 		}
 	}
+	// Make uniq a float as well.
+	uniq := float64(len(dataLookup))
 
 	// Run some checks.
 	if union < 1 && len(dataLookup) < 1 {
 		log.Panicln("No data found to review, please check file.")
 	}
-	if len(dataLookup) == 0 {
+	if len(dataLookup) == 0.00 {
 		fmt.Println("--- Results ---")
 		fmt.Println("File Pair in 100% union.")
 		fmt.Println("---------------")
 		os.Exit(0)
 	}
 
+	// calculate totals
+	countTotal := union + uniq
+	precentUnion := (union / countTotal) * 100
+	precentUniq := (uniq / countTotal) * 100
+
 	// Simple Report.
 	fmt.Println("--- Results ---")
-	fmt.Println("Union of Files: ", union)
-	fmt.Println("Uniq of Files: ", len(dataLookup))
+	fmt.Printf("Precent union: %.2f%%\n", precentUnion)
+	fmt.Printf("Precent uniq: %.2f%%\n", precentUniq)
 	fmt.Println("---------------")
 }
