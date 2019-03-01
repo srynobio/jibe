@@ -15,7 +15,7 @@ import (
 )
 
 // Current jibe version
-const Version = "1.0.2"
+const Version = "1.1.2"
 
 func digest(bv []byte) string {
 	hasher := sha1.New()
@@ -23,6 +23,7 @@ func digest(bv []byte) string {
 
 	bs := hasher.Sum(nil)
 	sha := base64.StdEncoding.EncodeToString(bs)
+
 	return sha
 }
 
@@ -37,8 +38,8 @@ func main() {
 	var args struct {
 		VCF      []string `help:"VCF file to collect concordance from. Space separated."`
 		SNP      bool     `help:"Only consider SNP calls."`
+		GENOTYPE bool     `help:"Will consider GT of all individuals in VCF record."`
 		NOMULTI  bool     `help:"Confirm via exit, no multi-allelic variants."`
-		DATALINE bool     `help:"Will use complete variant dataline including INFO and (single|multi) Genotype fields"`
 		CPUS     int      `help:"Number of CPUS workers to allow."`
 		VERSION  bool     `help:"Print current version and exit."`
 	}
@@ -66,6 +67,7 @@ func main() {
 
 		log.Println("Processing started for file: ", file)
 
+		// for each file.
 		go func(f string) {
 			defer wg.Done()
 			// open VCF file.
@@ -77,6 +79,7 @@ func main() {
 			echeck("Can't access vcf file.", err)
 			defer r.Close()
 
+			// for each line in vcf.
 			for {
 				read := r.Read()
 				if read == nil {
@@ -100,8 +103,18 @@ func main() {
 						altLength = len(dna)
 					}
 				}
+
+				// skip if vcf record is not a snp.
 				if args.SNP == true && altLength > 1 || refLength > 1 {
 					continue
+				}
+
+				// Collect genotype if asked.
+				var allGenotypes [][]int
+				if args.GENOTYPE == true {
+					for _, x := range read.Samples {
+						allGenotypes = append(allGenotypes, x.GT)
+					}
 				}
 
 				// Start work.
@@ -109,8 +122,8 @@ func main() {
 				go func(record *vcfgo.Variant) {
 					defer wg.Done()
 					var site string
-					if args.DATALINE == true {
-						site = record.String()
+					if args.GENOTYPE == true {
+						site = fmt.Sprintf("%s:%d:%d:%s:%s:%x", record.Chromosome, record.Start(), record.End(), record.Reference, record.Alt(), allGenotypes)
 					} else {
 						site = fmt.Sprintf("%s:%d:%d:%s:%s", record.Chromosome, record.Start(), record.End(), record.Reference, record.Alt())
 					}
